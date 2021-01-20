@@ -70,6 +70,17 @@ class Model {
         const response = await this.run(query)
         return response;
     }
+
+    async getArticlesAuthorAndCategory(id){
+        const query = `SELECT  a.headline AS headline,
+                               au.name AS author,
+                               c.name AS category
+                       FROM articles AS a 
+                               INNER JOIN author AS au ON a.author_id=au.id
+                               INNER JOIN category AS c ON a.category_id=c.id
+                               WHERE a.id = ${id}`
+        return await this.run(query);
+    }
 }
 
 

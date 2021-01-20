@@ -1,5 +1,6 @@
 const router = require("express").Router();
 
+const { response } = require("express");
 const Model = require("../../utils/model")
 
 const Article = new Model('articles');
@@ -54,18 +55,13 @@ router.delete("/:id", async (req, res, next) => {
   }
 });
 
-router.get("/authorsAndCategory", async (req, res, next) => {
+router.get("/articleAuthorAndCategory/:id", async (req, res, next) => {
   try {
-    const { rows } = await db.query(
-      `select a.content as article_content, au.name as author_name, c.name as cateogory_name
-      from articles as a inner join author as au inner join category as c
-      where a.id=au.id and c.id=a.id
-      `
-    );
-    res.send(rows);
+    const {rows} = await Article.getArticlesAuthorAndCategory(req.params.id);
+    res.send(rows)
   } catch (e) {
     console.log(e);
-    res.status(500).send(e);
+    res.status(500).send("🔴", e);
   }
 });
 
