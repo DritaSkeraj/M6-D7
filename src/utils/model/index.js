@@ -81,6 +81,13 @@ class Model {
                                WHERE a.id = ${id}`
         return await this.run(query);
     }
+
+    async search(searchReq){
+        const query = `SELECT *
+                       FROM articles 
+                       WHERE headLine LIKE '%${searchReq}' OR content LIKE '%${searchReq}'`
+        return await this.run(query);
+    }
 }
 
 

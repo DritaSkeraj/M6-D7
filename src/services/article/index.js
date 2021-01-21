@@ -65,4 +65,14 @@ router.get("/articleAuthorAndCategory/:id", async (req, res, next) => {
   }
 });
 
+router.get('/search/:searchReq', async (req, res, next) => {
+  try{
+    const {rows} = await Article.search(req.params.searchReq);
+    res.send(rows)
+  } catch(e){
+    console.log(e)
+    next(e)
+  }
+})
+
 module.exports = router;
