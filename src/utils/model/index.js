@@ -88,6 +88,13 @@ class Model {
                        WHERE headLine LIKE '%${searchReq}' OR content LIKE '%${searchReq}'`
         return await this.run(query);
     }
+
+    async countReviews(){
+        const query = `SELECT count(id), name, img
+                       FROM category
+                       GROUP BY (category.id)`;
+        return await this.run(query)
+    }
 }
 
 
